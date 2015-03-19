@@ -4,7 +4,7 @@ game = {
 		@canvas = document.getElementById 'canvas'
 		@context = canvas.getContext '2d'
 
-		@walker = new Walker @, 100, 100
+		@walker = new Walker @, 320, 240
 
 	update: ->
 		@walker.step()
@@ -25,8 +25,8 @@ game = {
 
 }
 
-randomInt = (max) ->
-	Math.floor(Math.random() * max)
+randomInt = (min, max) ->
+	Math.floor(Math.random() * (max - min) + min)
 
 class Walker
 	constructor: (game_, x_, y_) ->
@@ -39,13 +39,11 @@ class Walker
 		@game.context.fillRect @x, @y, 5, 5
 
 	step: ->
-		choice = randomInt 4
+		stepX = (randomInt(0, 3) - 1) * 5
+		stepY = (randomInt(0, 3) - 1) * 5
 
-		switch choice
-			when 0 then @x += 5
-			when 1 then @x -= 5
-			when 2 then @y += 5
-			when 3 then @y -= 5
+		@x += stepX
+		@y += stepY
 
 window.addEventListener "load", ->
 	game.init()
